@@ -678,7 +678,7 @@ int nvme_set_queue_count(struct nvme_ctrl *ctrl, int *count)
 	int status, nr_io_queues;
 
 	status = nvme_set_features(ctrl, NVME_FEAT_NUM_QUEUES, q_count, NULL, 0,
-			&result);
+			&result);		//get queue limit from NVMe
 	if (status < 0)
 		return status;
 
@@ -1998,6 +1998,7 @@ static void nvme_alloc_ns(struct nvme_ctrl *ctrl, unsigned nsid)
 	kfree(ns);
 }
 
+//remove  nvme namespace
 static void nvme_ns_remove(struct nvme_ns *ns)
 {
 	if (test_and_set_bit(NVME_NS_REMOVING, &ns->flags))

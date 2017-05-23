@@ -1408,8 +1408,10 @@ static int nvme_setup_io_queues(struct nvme_dev *dev)
 	struct pci_dev *pdev = to_pci_dev(dev->dev);
 	int result, nr_io_queues, size;
 
-	nr_io_queues = num_online_cpus();
-	result = nvme_set_queue_count(&dev->ctrl, &nr_io_queues);
+	nr_io_queues = num_online_cpus();		//get cpu number
+	//@description: get min number of num_online_cpus() and queue limit from nvme as the queue length created
+	//@return: nr_io_queues -> the queue length will be created
+	result = nvme_set_queue_count(&dev->ctrl, &nr_io_queues);	
 	if (result < 0)
 		return result;
 
